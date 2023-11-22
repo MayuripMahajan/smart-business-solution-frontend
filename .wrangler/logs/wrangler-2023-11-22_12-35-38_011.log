@@ -93,3 +93,23 @@ Failed to load .env file "D:\E\Work Space\Smart Buz Solution\sbs-frontend\.dev.v
 --- 2023-11-22T12:35:45.234Z debug
 Metrics dispatcher: Dispatching disabled - would have sent {"type":"event","name":"run pages dev","properties":{}}.
 ---
+
+--- 2023-11-22T12:44:01.872Z log
+[2m⎔ Reloading local server...[22m
+---
+
+--- 2023-11-22T12:44:01.877Z warn
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mParsed 2 valid header rules.[0m
+
+
+---
+
+--- 2023-11-22T12:44:02.206Z error
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mkj/async-io-win32.c++:982: warning: Bind address resolved to multiple addresses.  Only the first address will be used.  If this is incorrect, specify the address numerically.  This may be fixed in the future.; addrs[0].toString() = 127.0.0.1:56688[0m
+
+
+---
+
+--- 2023-11-22T12:44:02.356Z info
+[REMIX DEV] 3141db06 ready
+---
