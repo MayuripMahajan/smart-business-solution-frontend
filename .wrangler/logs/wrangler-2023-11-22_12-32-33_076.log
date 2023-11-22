@@ -1,0 +1,69 @@
+
+--- 2023-11-22T12:32:33.337Z debug
+🐛 Writing logs to ".wrangler\logs\wrangler-2023-11-22_12-32-33_076.log"
+---
+
+--- 2023-11-22T12:32:33.337Z debug
+Failed to load .env file ".env": Error: ENOENT: no such file or directory, open '.env'
+    at Object.openSync (node:fs:602:3)
+    at Object.readFileSync (node:fs:470:35)
+    at tryLoadDotEnv (D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:122671:72)
+    at loadDotEnv (D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:122680:12)
+    at D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:146614:20
+    at D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:130116:16
+    at maybeAsyncResult (D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:128337:44)
+    at D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:130115:14
+    at D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:128324:22
+    at Array.reduce (<anonymous>) {
+  errno: -4058,
+  syscall: 'open',
+  code: 'ENOENT',
+  path: '.env'
+}
+---
+
+--- 2023-11-22T12:32:33.349Z debug
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts/f3775da80ad1613fbc4fabaeebfb3748/pages/projects/sbs-frontend/deployments
+---
+
+--- 2023-11-22T12:32:33.349Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2023-11-22T12:32:33.349Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2023-11-22T12:32:33.349Z debug
+-- END CF API REQUEST
+---
+
+--- 2023-11-22T12:32:35.105Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2023-11-22T12:32:35.105Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2023-11-22T12:32:35.105Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2023-11-22T12:32:35.105Z debug
+-- END CF API RESPONSE
+---
+
+--- 2023-11-22T12:32:35.106Z debug
+Saving to cache: {"account_id":"f3775da80ad1613fbc4fabaeebfb3748"}
+---
+
+--- 2023-11-22T12:32:35.138Z log
+┌┐
+││
+└┘
+---
+
+--- 2023-11-22T12:32:35.140Z debug
+Metrics dispatcher: Dispatching disabled - would have sent {"type":"event","name":"list pages deployments","properties":{}}.
+---

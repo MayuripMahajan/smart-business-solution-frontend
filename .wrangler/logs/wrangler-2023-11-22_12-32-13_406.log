@@ -1,0 +1,212 @@
+
+--- 2023-11-22T12:32:13.917Z debug
+🐛 Writing logs to ".wrangler\logs\wrangler-2023-11-22_12-32-13_406.log"
+---
+
+--- 2023-11-22T12:32:13.917Z debug
+Failed to load .env file ".env": Error: ENOENT: no such file or directory, open '.env'
+    at Object.openSync (node:fs:602:3)
+    at Object.readFileSync (node:fs:470:35)
+    at tryLoadDotEnv (D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:122671:72)
+    at loadDotEnv (D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:122680:12)
+    at D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:146614:20
+    at D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:130116:16
+    at maybeAsyncResult (D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:128337:44)
+    at D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:130115:14
+    at D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:128324:22
+    at Array.reduce (<anonymous>) {
+  errno: -4058,
+  syscall: 'open',
+  code: 'ENOENT',
+  path: '.env'
+}
+---
+
+--- 2023-11-22T12:32:13.959Z log
+ ⛅️ wrangler 3.17.0
+-------------------
+---
+
+--- 2023-11-22T12:32:13.961Z log
+Getting User settings...
+---
+
+--- 2023-11-22T12:32:13.963Z debug
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/user
+---
+
+--- 2023-11-22T12:32:13.965Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2023-11-22T12:32:13.965Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2023-11-22T12:32:13.965Z debug
+-- END CF API REQUEST
+---
+
+--- 2023-11-22T12:32:15.377Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2023-11-22T12:32:15.378Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2023-11-22T12:32:15.378Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2023-11-22T12:32:15.378Z debug
+-- END CF API RESPONSE
+---
+
+--- 2023-11-22T12:32:15.380Z debug
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/accounts?page=1
+---
+
+--- 2023-11-22T12:32:15.380Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2023-11-22T12:32:15.380Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2023-11-22T12:32:15.380Z debug
+-- END CF API REQUEST
+---
+
+--- 2023-11-22T12:32:16.337Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2023-11-22T12:32:16.338Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2023-11-22T12:32:16.338Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2023-11-22T12:32:16.339Z debug
+-- END CF API RESPONSE
+---
+
+--- 2023-11-22T12:32:16.340Z log
+👋 You are logged in with an OAuth Token, associated with the email ankitmeshram.info@gmail.com!
+---
+
+--- 2023-11-22T12:32:16.371Z log
+┌───────────────────────────────────────┬──────────────────────────────────┐
+│ Account Name                          │ Account ID                       │
+├───────────────────────────────────────┼──────────────────────────────────┤
+│ Ankitmeshram.info@gmail.com's Account │ f3775da80ad1613fbc4fabaeebfb3748 │
+└───────────────────────────────────────┴──────────────────────────────────┘
+---
+
+--- 2023-11-22T12:32:16.372Z log
+🔓 Token Permissions: If scopes are missing, you may need to logout and re-login.
+---
+
+--- 2023-11-22T12:32:16.372Z log
+Scope (Access)
+---
+
+--- 2023-11-22T12:32:16.372Z log
+- account (read)
+---
+
+--- 2023-11-22T12:32:16.372Z log
+- user (read)
+---
+
+--- 2023-11-22T12:32:16.372Z log
+- workers (write)
+---
+
+--- 2023-11-22T12:32:16.372Z log
+- workers_kv (write)
+---
+
+--- 2023-11-22T12:32:16.373Z log
+- workers_routes (write)
+---
+
+--- 2023-11-22T12:32:16.373Z log
+- workers_scripts (write)
+---
+
+--- 2023-11-22T12:32:16.373Z log
+- workers_tail (read)
+---
+
+--- 2023-11-22T12:32:16.373Z log
+- d1 (write)
+---
+
+--- 2023-11-22T12:32:16.373Z log
+- pages (write)
+---
+
+--- 2023-11-22T12:32:16.373Z log
+- zone (read)
+---
+
+--- 2023-11-22T12:32:16.373Z log
+- ssl_certs (write)
+---
+
+--- 2023-11-22T12:32:16.373Z log
+- constellation (write)
+---
+
+--- 2023-11-22T12:32:16.373Z log
+- ai (read)
+---
+
+--- 2023-11-22T12:32:16.374Z log
+- offline_access 
+---
+
+--- 2023-11-22T12:32:16.393Z debug
+-- START CF API REQUEST: GET https://api.cloudflare.com/client/v4/user
+---
+
+--- 2023-11-22T12:32:16.393Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2023-11-22T12:32:16.393Z debug
+INIT: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2023-11-22T12:32:16.393Z debug
+-- END CF API REQUEST
+---
+
+--- 2023-11-22T12:32:17.317Z debug
+-- START CF API RESPONSE: OK 200
+---
+
+--- 2023-11-22T12:32:17.319Z debug
+HEADERS: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2023-11-22T12:32:17.319Z debug
+RESPONSE: omitted; set WRANGLER_LOG_SANITIZE=false to include sanitized data
+---
+
+--- 2023-11-22T12:32:17.319Z debug
+-- END CF API RESPONSE
+---
+
+--- 2023-11-22T12:32:17.320Z debug
+Saving to cache: {"userId":"2c5ff9d36072648e1aae5838c10cd39d"}
+---
+
+--- 2023-11-22T12:32:17.327Z debug
+Metrics dispatcher: Dispatching disabled - would have sent {"type":"event","name":"view accounts","properties":{}}.
+---

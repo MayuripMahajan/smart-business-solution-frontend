@@ -1,0 +1,95 @@
+
+--- 2023-11-22T12:35:39.472Z debug
+🐛 Writing logs to ".wrangler\logs\wrangler-2023-11-22_12-35-38_011.log"
+---
+
+--- 2023-11-22T12:35:39.471Z debug
+Failed to load .env file ".env": Error: ENOENT: no such file or directory, open '.env'
+    at Object.openSync (node:fs:602:3)
+    at Object.readFileSync (node:fs:470:35)
+    at tryLoadDotEnv (D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:122671:72)
+    at loadDotEnv (D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:122680:12)
+    at D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:146614:20
+    at D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:130116:16
+    at maybeAsyncResult (D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:128337:44)
+    at D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:130115:14
+    at D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:128324:22
+    at Array.reduce (<anonymous>) {
+  errno: -4058,
+  syscall: 'open',
+  code: 'ENOENT',
+  path: '.env'
+}
+---
+
+--- 2023-11-22T12:35:39.477Z log
+Compiling worker to "D:\E\Work Space\Smart Buz Solution\sbs-frontend\.wrangler\tmp\pages-CqhPQH\functionsWorker-0.2905386427725347.mjs"...
+---
+
+--- 2023-11-22T12:35:42.737Z log
+✨ Compiled Worker successfully
+---
+
+--- 2023-11-22T12:35:42.742Z debug
+Metrics dispatcher: Dispatching disabled - would have sent {"type":"event","name":"build pages functions","properties":{}}.
+---
+
+--- 2023-11-22T12:35:42.784Z log
+ ⛅️ wrangler 3.17.0
+[38;2;255;136;0m-------------------[39m
+---
+
+--- 2023-11-22T12:35:42.924Z warn
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1m--local is no longer required and will be removed in a future version.[0m
+
+  `wrangler dev` now uses the local Cloudflare Workers runtime by default. 🎉
+
+
+---
+
+--- 2023-11-22T12:35:42.941Z debug
+Metrics dispatcher: Dispatching disabled - would have sent {"type":"event","name":"run dev","properties":{"local":true,"usesTypeScript":false}}.
+---
+
+--- 2023-11-22T12:35:42.943Z debug
+Failed to load .env file "D:\E\Work Space\Smart Buz Solution\sbs-frontend\.dev.vars": Error: ENOENT: no such file or directory, open 'D:\E\Work Space\Smart Buz Solution\sbs-frontend\.dev.vars'
+    at Object.openSync (node:fs:602:3)
+    at Object.readFileSync (node:fs:470:35)
+    at tryLoadDotEnv (D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:122671:72)
+    at loadDotEnv (D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:122680:12)
+    at getVarsForDev (D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:150297:18)
+    at getBindings (D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:151219:10)
+    at getBindingsAndAssetPaths (D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:151176:20)
+    at getDevReactElement (D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:150840:40)
+    at startDev (D:\E\Work Space\Smart Buz Solution\sbs-frontend\node_modules\wrangler\wrangler-dist\cli.js:150903:60)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  errno: -4058,
+  syscall: 'open',
+  code: 'ENOENT',
+  path: 'D:\\E\\Work Space\\Smart Buz Solution\\sbs-frontend\\.dev.vars'
+}
+---
+
+--- 2023-11-22T12:35:43.453Z log
+[2m⎔ Starting local server...[22m
+---
+
+--- 2023-11-22T12:35:43.501Z warn
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mParsed 2 valid header rules.[0m
+
+
+---
+
+--- 2023-11-22T12:35:44.383Z error
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mkj/async-io-win32.c++:982: warning: Bind address resolved to multiple addresses.  Only the first address will be used.  If this is incorrect, specify the address numerically.  This may be fixed in the future.; addrs[0].toString() = 127.0.0.1:56688[0m
+
+
+---
+
+--- 2023-11-22T12:35:45.019Z info
+[REMIX DEV] 3141db06 ready
+---
+
+--- 2023-11-22T12:35:45.234Z debug
+Metrics dispatcher: Dispatching disabled - would have sent {"type":"event","name":"run pages dev","properties":{}}.
+---
