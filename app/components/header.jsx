@@ -1,6 +1,6 @@
 const Header = () => {
     return (
-        <div className="main-content">
+        
         <div className="header-wrapper">
             <div className="header-title">
                 <span>Welcome</span>
@@ -17,7 +17,6 @@ const Header = () => {
         </div>
 
 
-    </div>
     )
 }
 
