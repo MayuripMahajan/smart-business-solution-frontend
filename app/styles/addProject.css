@@ -83,6 +83,32 @@ select {
     margin-top: 5px;
 }
 
+.addteam{
+    display: flex;
+    width: 100%;
+    /* border: 1px solid red; */
+    font-size: 14px;
+    height: 35px;
+    margin: 20px 0;
+    justify-content: space-between;
+}
+.addt{
+    width: 79%;
+    border: 1px solid black;
+}
+.addb{
+    width: 20%;
+    background: orange;
+    color: white;
+    
+   
+
+    
+}
+.displayteam{
+    display: flex;
+}
+
 .ql-toolbar.ql-snow {
     border: 1px solid orange !important;
 
