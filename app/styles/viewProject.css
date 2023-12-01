@@ -11,6 +11,11 @@
     padding: 2rem;
 }
 
+.addproject{
+    display: flex;
+    justify-content: space-between;
+}
+
 .table-content{
     width: 100%;
 }

@@ -5,10 +5,13 @@ import Sidebar from "../components/sidebar"
 import Header from "../components/header"
 import { postAPI } from "~/utils/api"
 import { domain } from "~/utils/domain"
+import AddProject from "../components/addproject"
+import addProjectStyles from "../styles/addProject.css"
 
-const viewProject = () => {
+const Projects = () => {
 
     const [projects, setProjects] = useState([])
+    const [showForm, setShowForm] = useState(false)
 
     useEffect(() => {
         allprojects()
@@ -21,21 +24,29 @@ const viewProject = () => {
         setProjects(response?.projects)
     }
 
+    // const [childdata, setchilddata] = useState('');
+    // const handleform =(data)=> {
+    //     setDataFromChild(data);
+    // }
 
 
 
 
     return (
         <>
+
+            <AddProject showForm={showForm} showFormFunc={setShowForm}/>
+
             <Sidebar />
             <div className="main-content">
-
-
-
                 <Header />
-
                 <div className="table-header">
+                    <button onClick={() => setShowForm(!showForm)}>Add Project</button>
+
+
                     <h3 className="title">Table Data </h3>
+
+
                     <div className="table-content">
                         <table>
                             <thead>
@@ -88,7 +99,7 @@ const viewProject = () => {
     )
 }
 
-export default viewProject
+export default Projects
 
 export const links = () => [
     {
@@ -97,5 +108,9 @@ export const links = () => [
     }, {
         rel: "stylesheet",
         href: styles1
+    },
+    {
+        rel: "stylesheet",
+        href: addProjectStyles
     }
 ]
