@@ -51,11 +51,11 @@ const Projects = () => {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Title</th>
-                                    <th>Reporter</th>
-                                    <th>Creater</th>
-                                    <th>Status</th>
-                                    <th>Tags</th>
+                                    <th>Projects</th>
+                                    <th>Owner</th>
+                                    <th>Access</th>
+                                    <th>Start date</th>
+                                    <th>End Date</th>
                                     {/* <th>Association</th>
                                     <th>Assignee</th>
                                     <th>Due Date</th> */}

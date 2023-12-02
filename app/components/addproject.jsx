@@ -1,6 +1,8 @@
 
 import { Editor } from 'primereact/editor';
 import { useEffect, useState } from 'react';
+import { postAPI } from '~/utils/api';
+import { domain } from '~/utils/domain';
 
 const AddProject = ({ showForm, showFormFunc }) => {
 
@@ -15,6 +17,30 @@ const AddProject = ({ showForm, showFormFunc }) => {
     })
 
     const [teamMember, setteamMember] = useState("")
+
+    const addProject = async () => {
+        try {
+            if (projectForm?.name && projectForm?.owner) {
+                const response = await postAPI(`${domain}/api/project/createproject`, JSON.stringify(projectForm))
+                if (response?.message == "Project Created Successfully") {
+                    alert("Project Added")
+                    setteamMember("");
+                    setProjectForm({
+                        name: "",
+                        start_date: "",
+                        end_date: "",
+                        owner: "",
+                        description: "",
+                        project_access: "private",
+                        project_team: [],
+                    })
+                    showFormFunc(false)
+                }
+            }
+        } catch (err) {
+            console.log("Something went wrong", err);
+        }
+    }
 
     useEffect(() => {
         console.log(projectForm)
@@ -31,6 +57,7 @@ const AddProject = ({ showForm, showFormFunc }) => {
                     onChange={(e) => setProjectForm((prev) => {
                         return { ...prev, name: e.target.value };
                     })}
+                    value={projectForm?.name}
                 /> <br />
                 <div className="section">
                     <div>
@@ -39,6 +66,8 @@ const AddProject = ({ showForm, showFormFunc }) => {
                             onChange={(e) => setProjectForm((prev) => {
                                 return { ...prev, owner: e.target.value };
                             })}
+                            value={projectForm?.owner}
+
                         /> <br />
                     </div>
 
@@ -49,6 +78,8 @@ const AddProject = ({ showForm, showFormFunc }) => {
                             onChange={(e) => setProjectForm((prev) => {
                                 return { ...prev, project_access: e.target.value };
                             })}
+                            value={projectForm?.project_access}
+
                         >
                             <option value="public" >Private</option>
                             <option value="public">Public</option>
@@ -66,7 +97,10 @@ const AddProject = ({ showForm, showFormFunc }) => {
                         <input className="date design" type="date"
                             onChange={(e) => setProjectForm((prev) => {
                                 return { ...prev, start_date: e.target.value };
-                            })} />
+                            })}
+                            value={projectForm?.start_date}
+
+                        />
                     </div>
 
 
@@ -76,7 +110,10 @@ const AddProject = ({ showForm, showFormFunc }) => {
                         <input className="date design" type="date"
                             onChange={(e) => setProjectForm((prev) => {
                                 return { ...prev, end_date: e.target.value };
-                            })} />
+                            })}
+                            value={projectForm?.end_date}
+
+                        />
                     </div>
 
                 </div>
@@ -86,10 +123,10 @@ const AddProject = ({ showForm, showFormFunc }) => {
                 </p>
 
                 <Editor style={{ height: '320px', border: '1px solid orange' }}
-
                     onTextChange={(e) => setProjectForm((prev) => {
                         return { ...prev, description: e.htmlValue };
                     })}
+                    value={projectForm?.description}
                 />
 
 
@@ -98,7 +135,9 @@ const AddProject = ({ showForm, showFormFunc }) => {
                         value={teamMember}
                         onChange={(e) => setteamMember(
                             e.target.value
-                        )} />
+                        )}
+
+                    />
                     <button className='addb' onClick={() => {
                         setProjectForm((prev) => {
                             const newMember = [...prev.project_team, teamMember]
@@ -124,8 +163,22 @@ const AddProject = ({ showForm, showFormFunc }) => {
 
 
                 <div className="btn">
-                    <button className="addbtn">Add</button>
-                    <button className="cancelbtn" onClick={() => showFormFunc(false)}>Cancel</button>
+                    <button className="addbtn" onClick={() => addProject()}>Add</button>
+                    <button className="cancelbtn" onClick={() => {
+                        setProjectForm(
+                            {
+                                name: "",
+                                start_date: "",
+                                end_date: "",
+                                owner: "",
+                                description: "",
+                                project_access: "private",
+                                project_team: [],
+                            }
+                        )
+                        setteamMember("")
+                        showFormFunc(false)
+                    }}>Cancel</button>
 
                 </div>
 
