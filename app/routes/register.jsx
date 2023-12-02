@@ -24,6 +24,15 @@ const Register = () => {
                     const response = await postAPI(`${domain}/api/user/signup`, JSON.stringify(userForm))
                     if (response?.success) {
                         alert("Register Successfully")
+                        setUserForm(
+                            {
+                                name: "",
+                                email: "",
+                                password: "",
+                                confirmPassword: "",
+                                phone: ""
+                            }
+                        )
                     } else {
                         response?.message == "user already exists" &&
                             alert("user already exists")
@@ -54,7 +63,7 @@ const Register = () => {
             <div className="side2">
                 <div className="login">
                     <h1>Register</h1>
-                    <input className="inp" type="text" placeholder="Enter the Name"
+                    <input value={userForm?.name} className="inp" type="text" placeholder="Enter the Name"
                         onChange={(e) => {
                             setUserForm((prev) => {
                                 return {
@@ -62,7 +71,7 @@ const Register = () => {
                                 }
                             })
                         }} />
-                    <input className="inp" type="email" placeholder="Email"
+                    <input value={userForm?.email} className="inp" type="email" placeholder="Email"
                         onChange={(e) => {
                             setUserForm((prev) => {
                                 return {
@@ -70,7 +79,7 @@ const Register = () => {
                                 }
                             })
                         }} />
-                    <input className="inp" type="password" placeholder="Password"
+                    <input value={userForm?.password} className="inp" type="password" placeholder="Password"
                         onChange={(e) => {
                             setUserForm((prev) => {
                                 return {
@@ -78,7 +87,7 @@ const Register = () => {
                                 }
                             })
                         }} />
-                    <input className="inp" type="password" placeholder="Confirm Password"
+                    <input value={userForm?.confirmPassword} className="inp" type="password" placeholder="Confirm Password"
                         onChange={(e) => {
                             setUserForm((prev) => {
                                 return {
@@ -86,7 +95,7 @@ const Register = () => {
                                 }
                             })
                         }} />
-                    <input className="inp" type="text" placeholder="Enter the Mobile Number"
+                    <input value={userForm?.phone} className="inp" type="text" placeholder="Enter the Mobile Number"
                         onChange={(e) => {
                             setUserForm((prev) => {
                                 return {
