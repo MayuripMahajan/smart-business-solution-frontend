@@ -21,12 +21,7 @@ const Projects = () => {
     const [updatedProject, setUpdatedProject] = useState({})
 
     useEffect(() => {
-        allprojects()
-        getCookie("UD").then((res) => {
-            console.log(JSON.parse(res))
-            setOEmail(JSON.parse(res).email)
-        })
-
+        userData()
     }, [])
 
     useEffect(() => {
@@ -40,9 +35,19 @@ const Projects = () => {
         })
     }, [updatedProject])
 
-    const allprojects = async () => {
+    const userData = async () => {
+        await getCookie("UD").then((res) => {
+            console.log(JSON.parse(res))
+            setOEmail(JSON.parse(res).email)
+            allprojects(JSON.parse(res).email)
 
-        const response = await postAPI(`${domain}/api/project/allprojects`, "")
+        })
+
+    }
+
+    const allprojects = async (e = null) => {
+
+        const response = await postAPI(`${domain}/api/project/viewprojects`, JSON.stringify({ email: oEmail || e }))
         console.log(response)
         setProjects(response?.projects)
     }
@@ -57,6 +62,8 @@ const Projects = () => {
 
                 })
                 alert('Successfully Deleted')
+            } else if (response?.message == "You don't have access to delete") {
+                alert("You don't have access to delete")
             }
         }
 
@@ -90,6 +97,7 @@ const Projects = () => {
                         <table>
                             <thead>
                                 <tr>
+                                    <th>Sr. No.</th>
                                     <th>Projects</th>
                                     <th>Owner</th>
                                     <th>Access</th>
@@ -106,8 +114,9 @@ const Projects = () => {
                             <tbody>
                                 {
                                     projects?.length > 0 ?
-                                        projects.map((pro) => {
+                                        projects.map((pro, i) => {
                                             return <tr key={pro?._id}>
+                                                <td>{i + 1}</td>
                                                 <td>{pro?.name}</td>
                                                 <td>{pro?.owner}</td>
                                                 <td>{pro?.project_access}</td>
