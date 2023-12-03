@@ -18,6 +18,7 @@ const Projects = () => {
     const [showEditForm, setShowEditForm] = useState(false)
     const [oEmail, setOEmail] = useState("")
     const [currentProject, setCurrentProject] = useState({})
+    const [updatedProject, setUpdatedProject] = useState({})
 
     useEffect(() => {
         allprojects()
@@ -27,6 +28,17 @@ const Projects = () => {
         })
 
     }, [])
+
+    useEffect(() => {
+        setProjects((prev) => {
+            return prev.map((p) => {
+                if (p?._id == updatedProject?._id) {
+                    p = updatedProject
+                }
+                return p
+            })
+        })
+    }, [updatedProject])
 
     const allprojects = async () => {
 
@@ -62,7 +74,7 @@ const Projects = () => {
         <>
 
             <AddProject showForm={showForm} showFormFunc={setShowForm} setProjects={setProjects} />
-            <EditProject showForm={showEditForm} showFormFunc={setShowEditForm} currentProject={currentProject} setProjectFunc={setCurrentProject} />
+            <EditProject showForm={showEditForm} showFormFunc={setShowEditForm} currentProject={currentProject} setUpdatedProject={setUpdatedProject} />
 
             <Sidebar />
             <div className="main-content">

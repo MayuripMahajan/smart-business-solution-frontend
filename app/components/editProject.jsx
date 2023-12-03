@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { postAPI } from '~/utils/api';
 import { domain } from '~/utils/domain';
 
-const EditProject = ({ showForm, showFormFunc, currentProject, setProjectFunc }) => {
+const EditProject = ({ showForm, showFormFunc, currentProject, setUpdatedProject }) => {
 
     const [projectForm, setProjectForm] = useState({
         name: "",
@@ -30,31 +30,13 @@ const EditProject = ({ showForm, showFormFunc, currentProject, setProjectFunc })
 
     const [teamMember, setteamMember] = useState("")
 
-    const addProject = async () => {
+    const updateProject = async () => {
         try {
-            if (projectForm?.name && projectForm?.owner) {
-                const response = await postAPI(`${domain}/api/project/createproject`, JSON.stringify(projectForm))
-                if (response?.message == "Project Created Successfully") {
+            if (projectForm?.name && projectForm?.owner && projectForm?._id) {
+                const response = await postAPI(`${domain}/api/project/updateproject`, JSON.stringify(projectForm))
+                if (response?.message == "Project Updated Successfully") {
+                    setUpdatedProject(response?.project)
 
-                    setProjects((prev) => {
-                        console.log(prev, "prevprev")
-                        prev.unshift(response?.projectDetails)
-                        console.log(prev)
-                        return prev
-                    })
-
-
-                    alert("Project Added")
-                    setteamMember("");
-                    setProjectForm({
-                        name: "",
-                        start_date: "",
-                        end_date: "",
-                        owner: "",
-                        description: "",
-                        project_access: "private",
-                        project_team: [],
-                    })
                     showFormFunc(false)
                 }
             }
@@ -184,7 +166,7 @@ const EditProject = ({ showForm, showFormFunc, currentProject, setProjectFunc })
 
 
                 <div className="btn">
-                    <button className="addbtn" onClick={() => addProject()}>Add</button>
+                    <button className="addbtn" onClick={() => updateProject()}>Update</button>
                     <button className="cancelbtn" onClick={() => {
                         setProjectForm(
                             {
