@@ -9,9 +9,12 @@ import AddProject from "../components/addproject"
 import addProjectStyles from "../styles/addProject.css"
 import { getCookie } from "../utils/cookies"
 import EditProject from "../components/editProject"
+import { useNavigate } from "@remix-run/react"
 
 
 const Projects = () => {
+
+    const navigate = useNavigate();
 
     const [projects, setProjects] = useState([])
     const [showForm, setShowForm] = useState(false)
@@ -117,7 +120,12 @@ const Projects = () => {
                                         projects.map((pro, i) => {
                                             return <tr key={pro?._id}>
                                                 <td>{i + 1}</td>
-                                                <td>{pro?.name}</td>
+                                                <td onClick={() => navigate(`../tasks/${pro?._id}`, {
+                                                    state: { pid: pro?._id },
+                                                })}>
+
+
+                                                    {pro?.name}</td>
                                                 <td>{pro?.owner}</td>
                                                 <td>{pro?.project_access}</td>
                                                 <td>{pro?.created_at}</td>

@@ -4,24 +4,29 @@ import { useEffect, useState } from 'react';
 import { postAPI } from '~/utils/api';
 import { domain } from '~/utils/domain';
 
-const AddProject = ({ showForm, showFormFunc, setProjects }) => {
+const AddTask = ({ showForm, showFormFunc, setTasks }) => {
 
-    const [projectForm, setProjectForm] = useState({
-        name: "",
-        start_date: "",
-        end_date: "",
-        owner: "",
+    const [taskForm, setTaskForm] = useState({
+        _id: "",
+        pid: "",
+        title: "",
         description: "",
-        project_access: "private",
-        project_team: [],
+        assignTo: "",
+        assignBy: "",
+        dueDate: "",
+        priority: "",
+        isCompleted: "",
+        comments: [],
+        created_at: "",
+        updated_at: "",
     })
 
     const [teamMember, setteamMember] = useState("")
 
     const addProject = async () => {
         try {
-            if (projectForm?.name && projectForm?.owner) {
-                const response = await postAPI(`${domain}/api/project/createproject`, JSON.stringify(projectForm))
+            if (taskForm?.name && taskForm?.owner) {
+                const response = await postAPI(`${domain}/api/project/createproject`, JSON.stringify(taskForm))
                 if (response?.message == "Project Created Successfully") {
 
                     setProjects((prev) => {
@@ -36,16 +41,21 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
                     })
 
 
-                    alert("Project Added")
+                    alert("Task Added")
                     setteamMember("");
-                    setProjectForm({
-                        name: "",
-                        start_date: "",
-                        end_date: "",
-                        owner: "",
+                    setTaskForm({
+                        _id: "",
+                        pid: "",
+                        title: "",
                         description: "",
-                        project_access: "private",
-                        project_team: [],
+                        assignTo: "",
+                        assignBy: "",
+                        dueDate: "",
+                        priority: "",
+                        isCompleted: "",
+                        comments: [],
+                        created_at: "",
+                        updated_at: "",
                     })
                     showFormFunc(false)
                 }
@@ -56,30 +66,30 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
     }
 
     useEffect(() => {
-        console.log(projectForm)
-    }, [projectForm])
+        console.log(taskForm)
+    }, [taskForm])
 
     return (
         <div className={showForm ? "add-pro" : " add-pro show-add-pro"} >
             <div className="add-pro-content">
 
 
-                <h2>New Project</h2>
-                <p>Project title</p>
+                <h2>New Task</h2>
+                <p>Task title</p>
                 <input className="inputfield" type="text" placeholder="Enter the title"
-                    onChange={(e) => setProjectForm((prev) => {
+                    onChange={(e) => setTaskForm((prev) => {
                         return { ...prev, name: e.target.value };
                     })}
-                    value={projectForm?.name}
+                    value={taskForm?.name}
                 /> <br />
                 <div className="section">
                     <div>
                         <label htmlFor="">Owner:</label><br />
                         <input className="inputfield" type="text" placeholder="Enter the owner mail"
-                            onChange={(e) => setProjectForm((prev) => {
+                            onChange={(e) => setTaskForm((prev) => {
                                 return { ...prev, owner: e.target.value };
                             })}
-                            value={projectForm?.owner}
+                            value={taskForm?.owner}
 
                         /> <br />
                     </div>
@@ -88,10 +98,10 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
                     <div>
                         <label htmlFor="">Project Access:</label><br />
                         <select className="design"
-                            onChange={(e) => setProjectForm((prev) => {
+                            onChange={(e) => setTaskForm((prev) => {
                                 return { ...prev, project_access: e.target.value };
                             })}
-                            value={projectForm?.project_access}
+                            value={taskForm?.project_access}
 
                         >
                             <option value="public" >Private</option>
@@ -108,10 +118,10 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
                     <div>
                         <label htmlFor="">Start Date:</label><br />
                         <input className="date design" type="date"
-                            onChange={(e) => setProjectForm((prev) => {
+                            onChange={(e) => setTaskForm((prev) => {
                                 return { ...prev, start_date: e.target.value };
                             })}
-                            value={projectForm?.start_date}
+                            value={taskForm?.start_date}
 
                         />
                     </div>
@@ -121,10 +131,10 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
                     <div>
                         <label htmlFor="">End Date:</label><br />
                         <input className="date design" type="date"
-                            onChange={(e) => setProjectForm((prev) => {
+                            onChange={(e) => setTaskForm((prev) => {
                                 return { ...prev, end_date: e.target.value };
                             })}
-                            value={projectForm?.end_date}
+                            value={taskForm?.end_date}
 
                         />
                     </div>
@@ -136,10 +146,10 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
                 </p>
 
                 <Editor style={{ height: '320px', border: '1px solid orange' }}
-                    onTextChange={(e) => setProjectForm((prev) => {
+                    onTextChange={(e) => setTaskForm((prev) => {
                         return { ...prev, description: e.htmlValue };
                     })}
-                    value={projectForm?.description}
+                    value={taskForm?.description}
                 />
 
 
@@ -152,7 +162,7 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
 
                     />
                     <button className='addb' onClick={() => {
-                        setProjectForm((prev) => {
+                        setTaskForm((prev) => {
                             const newMember = [...prev.project_team, teamMember]
                             return { ...prev, project_team: newMember }
                         })
@@ -162,8 +172,8 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
 
                 <div className="displayteam">
                     {
-                        projectForm?.project_team.length > 0 ?
-                            projectForm.project_team.map((member, i) => {
+                        taskForm?.project_team.length > 0 ?
+                            taskForm.project_team.map((member, i) => {
                                 return <span key={i}> {member}</span>
                             })
                             : null
@@ -174,7 +184,7 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
                 <div className="btn">
                     <button className="addbtn" onClick={() => addProject()}>Add</button>
                     <button className="cancelbtn" onClick={() => {
-                        setProjectForm(
+                        setTaskForm(
                             {
                                 name: "",
                                 start_date: "",
@@ -203,7 +213,7 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
     )
 }
 
-export default AddProject;
+export default AddTask;
 
 // export const links = () => [
 //     {
