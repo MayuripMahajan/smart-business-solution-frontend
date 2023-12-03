@@ -32,6 +32,21 @@ const Projects = () => {
         setProjects(response?.projects)
     }
 
+    const deleteProject = async (pid) => {
+        if (confirm("Are You Sure?")) {
+            const response = await postAPI(`${domain}/api/project/deleteprojects`, JSON.stringify({ _id: pid, email: oEmail }))
+            if (response?.message == "project deleted successfully") {
+                setProjects((prev) => {
+                    const updatedProjects = prev.filter((p) => p._id != pid)
+                    return updatedProjects
+
+                })
+                alert('Successfully Deleted')
+            }
+        }
+
+    }
+
     // const [childdata, setchilddata] = useState('');
     // const handleform =(data)=> {
     //     setDataFromChild(data);
@@ -86,9 +101,7 @@ const Projects = () => {
                                                 <td>Ankit</td>
                                                 <td>28/11/2023</td> */}
                                                 <td><button>Edit</button></td>
-                                                <td><button onClick={() => {
-                                                    confirm("Are You Sure?") ? postAPI(`${domain}/api/project/deleteprojects`, JSON.stringify({ _id: pro?._id, email: oEmail })) : null
-                                                }}>Delete</button></td>
+                                                <td><button onClick={() => deleteProject(pro?._id)}>Delete</button></td>
 
                                             </tr>
                                         })
