@@ -83,7 +83,7 @@ select {
     margin-top: 5px;
 }
 
-.addteam{
+.addteam {
     display: flex;
     width: 100%;
     /* border: 1px solid red; */
@@ -92,21 +92,30 @@ select {
     margin: 20px 0;
     justify-content: space-between;
 }
-.addt{
+
+.addt {
     width: 79%;
     border: 1px solid black;
 }
-.addb{
+
+.addb {
     width: 20%;
     background: orange;
     color: white;
-    
-   
 
-    
+
+
+
 }
-.displayteam{
+
+.displayteam {
     display: flex;
+    flex-wrap: wrap;
+}
+
+.displayteam span {
+    background: rgba(128, 128, 128, 0.502);
+    margin: 3px;
 }
 
 .ql-toolbar.ql-snow {

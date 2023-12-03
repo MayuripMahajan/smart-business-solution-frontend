@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { postAPI } from '~/utils/api';
 import { domain } from '~/utils/domain';
 
-const AddProject = ({ showForm, showFormFunc, setProjects }) => {
+const EditProject = ({ showForm, showFormFunc, currentProject, setProjectFunc }) => {
 
     const [projectForm, setProjectForm] = useState({
         name: "",
@@ -15,6 +15,18 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
         project_access: "private",
         project_team: [],
     })
+
+    useEffect(() => {
+        console.log("sdfsdf", currentProject)
+        setProjectForm((prev) => {
+            return {
+                ...prev,
+                ...currentProject
+            }
+        })
+        console.log("sdfsdf", currentProject)
+
+    }, [currentProject])
 
     const [teamMember, setteamMember] = useState("")
 
@@ -157,13 +169,17 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
                 </div>
 
                 <div className="displayteam">
-                    {
-                        projectForm?.project_team.length > 0 ?
-                            projectForm.project_team.map((member, i) => {
-                                return <span key={i}> {member}</span>
-                            })
-                            : null
-                    }
+
+                    <p>
+                        {
+                            projectForm?.project_team.length > 0 ?
+                                projectForm.project_team.map((member, i) => {
+                                    return <span key={i}> {member}</span>
+                                })
+                                : null
+                        }
+
+                    </p>
                 </div>
 
 
@@ -199,7 +215,7 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
     )
 }
 
-export default AddProject;
+export default EditProject;
 
 // export const links = () => [
 //     {

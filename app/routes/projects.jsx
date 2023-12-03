@@ -8,13 +8,16 @@ import { domain } from "~/utils/domain"
 import AddProject from "../components/addproject"
 import addProjectStyles from "../styles/addProject.css"
 import { getCookie } from "../utils/cookies"
+import EditProject from "../components/editProject"
 
 
 const Projects = () => {
 
     const [projects, setProjects] = useState([])
     const [showForm, setShowForm] = useState(false)
+    const [showEditForm, setShowEditForm] = useState(false)
     const [oEmail, setOEmail] = useState("")
+    const [currentProject, setCurrentProject] = useState({})
 
     useEffect(() => {
         allprojects()
@@ -59,6 +62,7 @@ const Projects = () => {
         <>
 
             <AddProject showForm={showForm} showFormFunc={setShowForm} setProjects={setProjects} />
+            <EditProject showForm={showEditForm} showFormFunc={setShowEditForm} currentProject={currentProject} setProjectFunc={setCurrentProject} />
 
             <Sidebar />
             <div className="main-content">
@@ -100,7 +104,7 @@ const Projects = () => {
                                                 {/* <td>Ankit</td>
                                                 <td>Ankit</td>
                                                 <td>28/11/2023</td> */}
-                                                <td><button>Edit</button></td>
+                                                <td><button onClick={() => { setShowEditForm(true); setCurrentProject(pro) }}>Edit</button></td>
                                                 <td><button onClick={() => deleteProject(pro?._id)}>Delete</button></td>
 
                                             </tr>
