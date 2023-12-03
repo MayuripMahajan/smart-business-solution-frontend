@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { postAPI } from '~/utils/api';
 import { domain } from '~/utils/domain';
 
-const AddProject = ({ showForm, showFormFunc }) => {
+const AddProject = ({ showForm, showFormFunc, setProjects }) => {
 
     const [projectForm, setProjectForm] = useState({
         name: "",
@@ -23,6 +23,15 @@ const AddProject = ({ showForm, showFormFunc }) => {
             if (projectForm?.name && projectForm?.owner) {
                 const response = await postAPI(`${domain}/api/project/createproject`, JSON.stringify(projectForm))
                 if (response?.message == "Project Created Successfully") {
+
+                    setProjects((prev) => {
+                        console.log(prev, "prevprev")
+                        prev.unshift(response?.projectDetails)
+                        console.log(prev)
+                        return prev
+                    })
+
+
                     alert("Project Added")
                     setteamMember("");
                     setProjectForm({

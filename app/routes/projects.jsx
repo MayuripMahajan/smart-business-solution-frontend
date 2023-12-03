@@ -7,14 +7,22 @@ import { postAPI } from "~/utils/api"
 import { domain } from "~/utils/domain"
 import AddProject from "../components/addproject"
 import addProjectStyles from "../styles/addProject.css"
+import { getCookie } from "../utils/cookies"
+
 
 const Projects = () => {
 
     const [projects, setProjects] = useState([])
     const [showForm, setShowForm] = useState(false)
+    const [oEmail, setOEmail] = useState("")
 
     useEffect(() => {
         allprojects()
+        getCookie("UD").then((res) => {
+            console.log(JSON.parse(res))
+            setOEmail(JSON.parse(res).email)
+        })
+
     }, [])
 
     const allprojects = async () => {
@@ -35,7 +43,7 @@ const Projects = () => {
     return (
         <>
 
-            <AddProject showForm={showForm} showFormFunc={setShowForm}/>
+            <AddProject showForm={showForm} showFormFunc={setShowForm} setProjects={setProjects} />
 
             <Sidebar />
             <div className="main-content">
@@ -68,7 +76,7 @@ const Projects = () => {
                                 {
                                     projects?.length > 0 ?
                                         projects.map((pro) => {
-                                            return <tr>
+                                            return <tr key={pro?._id}>
                                                 <td>{pro?.name}</td>
                                                 <td>{pro?.owner}</td>
                                                 <td>{pro?.project_access}</td>
@@ -79,7 +87,7 @@ const Projects = () => {
                                                 <td>28/11/2023</td> */}
                                                 <td><button>Edit</button></td>
                                                 <td><button onClick={() => {
-                                                    confirm("Are You Sure?") ? postAPI(`${domain}/api/project/deleteprojects`, JSON.stringify({ _id: pro?._id })) : null
+                                                    confirm("Are You Sure?") ? postAPI(`${domain}/api/project/deleteprojects`, JSON.stringify({ _id: pro?._id, email: oEmail })) : null
                                                 }}>Delete</button></td>
 
                                             </tr>

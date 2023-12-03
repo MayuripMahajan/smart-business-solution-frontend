@@ -1,49 +1,51 @@
+import { Link } from "@remix-run/react"
+
 const Sidebar = () => {
     return (
         <div className="sidebar">
             <div className="logo"></div>
             <ul className="menu">
                 <li className="active">
-                    <a href="#" >
+                    <Link to="../dashboard" >
                         <i className="fas fa-tachometer-alt"></i>
                         <span>Dashboard</span>
-                    </a>
+                    </Link>
                 </li>
 
                 <li>
-                    <a href="#">
+                    <Link to="../projects">
                         <i className="fas fa-user"></i>
-                        <span>Profile</span>
-                    </a>
+                        <span>Projects</span>
+                    </Link>
                 </li>
 
                 <li>
-                    <a href="#">
+                    <Link to="#">
                         <i className="fas fa-chart-bar"></i>
                         <span>Statistics</span>
-                    </a>
+                    </Link>
                 </li>
 
                 <li>
-                    <a href="#">
+                    <Link to="#">
                         <i className="fas fa-briefcase"></i>
                         <span>Careers</span>
-                    </a>
+                    </Link>
                 </li>
 
                 <li>
-                    <a href="#">
+                    <Link to="#">
                         <i className="fas fa-question-circle"></i>
                         <span>FAQ</span>
-                    </a>
+                    </Link>
                 </li>
 
 
                 <li className="logout">
-                    <a href="#">
+                    <Link to="#">
                         <i className="fas fa-sign-out"></i>
                         <span>Logout</span>
-                    </a>
+                    </Link>
                 </li>
             </ul>
         </div>

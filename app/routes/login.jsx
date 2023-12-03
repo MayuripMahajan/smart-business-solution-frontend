@@ -16,15 +16,14 @@ const Login = () => {
             const response = await postAPI(`${domain}/api/user/signin`, JSON.stringify(loginForm))
             if (response?.success) {
                 setCookie("UD", JSON.stringify(response?.userDetails))
-                alert("Register Successfully")
+                alert("Logged Successfully")
                 setLoginForm(
                     {
-
                         email: "",
                         password: "",
-
                     }
                 )
+                
             }
             else {
                 if (response?.message == "password not match") {

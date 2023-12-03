@@ -4,12 +4,11 @@ import Header from "../components/header"
 const Dashboard = () => {
     return (
         <>
-        <Sidebar />
-
-        <Header />
-         
+            <Sidebar />
+            <div className="main-content">
+                <Header />
+            </div>
         </>
-
     )
 }
 export default Dashboard
