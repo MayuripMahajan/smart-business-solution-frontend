@@ -5,19 +5,16 @@ import Sidebar from "../components/sidebar"
 import Header from "../components/header"
 import { postAPI } from "~/utils/api"
 import { domain } from "~/utils/domain"
-import AddProject from "../components/addproject"
 import addProjectStyles from "../styles/addProject.css"
 import { getCookie } from "../utils/cookies"
 import EditProject from "../components/editProject"
 import { useLoaderData, useParams } from "@remix-run/react"
-
+import AddTask from "../components/addtask"
 
 const Projects = () => {
-
-
     const loaderData = useLoaderData()
 
-    // const { id } = useParams()
+    const { id } = useParams()
 
     const [tasks, setTasks] = useState([])
     const [showForm, setShowForm] = useState(false)
@@ -29,12 +26,8 @@ const Projects = () => {
     useEffect(() => {
         userData()
         // allTasks()
+        console.log(id)
     }, [])
-
-    // const allTasks = async () => {
-    //     const response = await postAPI(`${domain}/api/task/viewtasksbypid`, JSON.stringify({ pid: id }))
-    //     console.log(response)
-    // }
 
     useEffect(() => {
         console.log("Loader Data", loaderData)
@@ -44,63 +37,19 @@ const Projects = () => {
 
     }, [loaderData])
 
-    // useEffect(() => {
-    //     setProjects((prev) => {
-    //         return prev.map((p) => {
-    //             if (p?._id == updatedProject?._id) {
-    //                 p = updatedProject
-    //             }
-    //             return p
-    //         })
-    //     })
-    // }, [updatedProject])
-
     const userData = async () => {
         await getCookie("UD").then((res) => {
             console.log(JSON.parse(res))
             setOEmail(JSON.parse(res).email)
-            allprojects(JSON.parse(res).email)
+            // allprojects(JSON.parse(res).email)
 
         })
-
     }
-
-    // const allprojects = async (e = null) => {
-
-    //     const response = await postAPI(`${domain}/api/project/viewprojects`, JSON.stringify({ email: oEmail || e }))
-    //     console.log(response)
-    //     setProjects(response?.projects)
-    // }
-
-    // const deleteProject = async (pid) => {
-    //     if (confirm("Are You Sure?")) {
-    //         const response = await postAPI(`${domain}/api/project/deleteprojects`, JSON.stringify({ _id: pid, email: oEmail }))
-    //         if (response?.message == "project deleted successfully") {
-    //             setProjects((prev) => {
-    //                 const updatedProjects = prev.filter((p) => p._id != pid)
-    //                 return updatedProjects
-
-    //             })
-    //             alert('Successfully Deleted')
-    //         } else if (response?.message == "You don't have access to delete") {
-    //             alert("You don't have access to delete")
-    //         }
-    //     }
-
-    // }
-
-    // const [childdata, setchilddata] = useState('');
-    // const handleform =(data)=> {
-    //     setDataFromChild(data);
-    // }
-
-
-
 
     return (
         <>
 
-            <AddProject showForm={showForm} showFormFunc={setShowForm} setProjects={null} />
+            <AddTask setOEmail={oEmail} projectId={id} showForm={showForm} showFormFunc={setShowForm} setTasks={setTasks} />
             <EditProject showForm={showEditForm} showFormFunc={setShowEditForm} currentProject={currentProject} setUpdatedProject={setUpdatedProject} />
 
             <Sidebar />
@@ -120,11 +69,6 @@ const Projects = () => {
                                     <th>Status</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
-
-                                    {/* <th>Association</th>
-                                    <th>Assignee</th>
-                                    <th>Due Date</th> */}
-
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
@@ -141,9 +85,6 @@ const Projects = () => {
                                                 <td>{task?.isCompleted}</td>
                                                 <td>{task?.created_at}</td>
                                                 <td>{task?.updated_at}</td>
-                                                {/* <td>Ankit</td>
-                                                <td>Ankit</td>
-                                                <td>28/11/2023</td> */}
                                                 <td><button onClick={() => { setShowEditForm(true); setCurrentProject(pro) }}>Edit</button></td>
                                                 <td><button onClick={() => deleteProject(pro?._id)}>Delete</button></td>
 

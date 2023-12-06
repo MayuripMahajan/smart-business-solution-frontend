@@ -62,8 +62,6 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
     return (
         <div className={showForm ? "add-pro" : " add-pro show-add-pro"} >
             <div className="add-pro-content">
-
-
                 <h2>New Project</h2>
                 <p>Project title</p>
                 <input className="inputfield" type="text" placeholder="Enter the title"

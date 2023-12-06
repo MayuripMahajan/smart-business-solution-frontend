@@ -4,37 +4,37 @@ import { useEffect, useState } from 'react';
 import { postAPI } from '~/utils/api';
 import { domain } from '~/utils/domain';
 
-const AddTask = ({ showForm, showFormFunc, setTasks }) => {
+const AddTask = ({ showForm, showFormFunc, setTasks, projectId, setOEmail }) => {
 
     const [taskForm, setTaskForm] = useState({
         _id: "",
-        pid: "",
+        pid: projectId || "",
         title: "",
         description: "",
         assignTo: "",
         assignBy: "",
         dueDate: "",
-        priority: "",
-        isCompleted: "",
+        priority: "default",
+        isCompleted: "default",
         comments: [],
         created_at: "",
         updated_at: "",
     })
 
-    const [teamMember, setteamMember] = useState("")
+    const [comments, setComments] = useState({ by: "", comment: "" })
 
-    const addProject = async () => {
+    const addTask = async () => {
         try {
-            if (taskForm?.name && taskForm?.owner) {
-                const response = await postAPI(`${domain}/api/project/createproject`, JSON.stringify(taskForm))
-                if (response?.message == "Project Created Successfully") {
+            if (taskForm?.title && taskForm?.pid) {
+                const response = await postAPI(`${domain}/api/task/createtask`, JSON.stringify(taskForm))
+                if (response?.message == "Tasks Created Successfully") {
 
-                    setProjects((prev) => {
+                    setTasks((prev) => {
                         console.log(prev, "prevprev")
                         if (prev) {
-                            prev?.unshift(response?.projectDetails)
+                            prev?.unshift(response?.taskDetails)
                         } else {
-                            return response?.projectDetails
+                            return response?.taskDetails
                         }
                         console.log(prev)
                         return prev
@@ -42,16 +42,19 @@ const AddTask = ({ showForm, showFormFunc, setTasks }) => {
 
 
                     alert("Task Added")
-                    setteamMember("");
+                    setComments({
+                        by: "",
+                        comment: ""
+                    });
                     setTaskForm({
                         _id: "",
-                        pid: "",
+                        pid: projectId || "",
                         title: "",
                         description: "",
                         assignTo: "",
                         assignBy: "",
                         dueDate: "",
-                        priority: "",
+                        priority: "default",
                         isCompleted: "",
                         comments: [],
                         created_at: "",
@@ -59,11 +62,22 @@ const AddTask = ({ showForm, showFormFunc, setTasks }) => {
                     })
                     showFormFunc(false)
                 }
+            } else {
+                console.log("Title and pid are required")
             }
         } catch (err) {
             console.log("Something went wrong", err);
         }
     }
+
+    useEffect(() => {
+        setTaskForm((prev) => {
+            return {
+                ...prev,
+                pid: projectId
+            }
+        })
+    }, [])
 
     useEffect(() => {
         console.log(taskForm)
@@ -78,69 +92,10 @@ const AddTask = ({ showForm, showFormFunc, setTasks }) => {
                 <p>Task title</p>
                 <input className="inputfield" type="text" placeholder="Enter the title"
                     onChange={(e) => setTaskForm((prev) => {
-                        return { ...prev, name: e.target.value };
+                        return { ...prev, title: e.target.value };
                     })}
-                    value={taskForm?.name}
+                    value={taskForm?.title}
                 /> <br />
-                <div className="section">
-                    <div>
-                        <label htmlFor="">Owner:</label><br />
-                        <input className="inputfield" type="text" placeholder="Enter the owner mail"
-                            onChange={(e) => setTaskForm((prev) => {
-                                return { ...prev, owner: e.target.value };
-                            })}
-                            value={taskForm?.owner}
-
-                        /> <br />
-                    </div>
-
-
-                    <div>
-                        <label htmlFor="">Project Access:</label><br />
-                        <select className="design"
-                            onChange={(e) => setTaskForm((prev) => {
-                                return { ...prev, project_access: e.target.value };
-                            })}
-                            value={taskForm?.project_access}
-
-                        >
-                            <option value="public" >Private</option>
-                            <option value="public">Public</option>
-                        </select>
-                    </div>
-                </div>
-
-                <br />
-                <br />
-
-
-                <div className="section">
-                    <div>
-                        <label htmlFor="">Start Date:</label><br />
-                        <input className="date design" type="date"
-                            onChange={(e) => setTaskForm((prev) => {
-                                return { ...prev, start_date: e.target.value };
-                            })}
-                            value={taskForm?.start_date}
-
-                        />
-                    </div>
-
-
-
-                    <div>
-                        <label htmlFor="">End Date:</label><br />
-                        <input className="date design" type="date"
-                            onChange={(e) => setTaskForm((prev) => {
-                                return { ...prev, end_date: e.target.value };
-                            })}
-                            value={taskForm?.end_date}
-
-                        />
-                    </div>
-
-                </div>
-
 
                 <p>Description:
                 </p>
@@ -153,49 +108,135 @@ const AddTask = ({ showForm, showFormFunc, setTasks }) => {
                 />
 
 
-                <div className="addteam">
-                    <input className='addt' type="text" placeholder='Add team member'
-                        value={teamMember}
-                        onChange={(e) => setteamMember(
-                            e.target.value
-                        )}
 
-                    />
-                    <button className='addb' onClick={() => {
-                        setTaskForm((prev) => {
-                            const newMember = [...prev.project_team, teamMember]
-                            return { ...prev, project_team: newMember }
-                        })
-                        setteamMember("")
-                    }}>Add teammate </button>
+
+                <div className="section">
+                    <div>
+                        <label htmlFor="">Assign To:</label><br />
+                        <input className="inputfield" type="text" placeholder="Enter the owner mail"
+                            onChange={(e) => setTaskForm((prev) => {
+                                return { ...prev, assignTo: e.target.value };
+                            })}
+                            value={taskForm?.assignTo}
+
+                        /> <br />
+                    </div>
+
+
+                    <div>
+                        <label htmlFor="">Assign By:</label><br />
+                        <input className="inputfield" type="text" placeholder="Enter the owner mail"
+                            onChange={(e) => setTaskForm((prev) => {
+                                return { ...prev, assignBy: e.target.value };
+                            })}
+                            value={taskForm?.assignBy}
+
+                        /> <br />
+                    </div>
                 </div>
+
+
+
+
+                <div className="section">
+                    <div>
+                        <label htmlFor="">Due Date:</label><br />
+                        <input className="date design" type="date"
+                            onChange={(e) => setTaskForm((prev) => {
+                                return { ...prev, dueDate: e.target.value };
+                            })}
+                            value={taskForm?.dueDate}
+
+                        />
+                    </div>
+
+
+
+                    <div>
+                        <label htmlFor="">Priority:</label><br />
+                        <select className="design"
+                            onChange={(e) => setTaskForm((prev) => {
+                                return { ...prev, priority: e.target.value };
+                            })}
+                            value={taskForm?.priority}
+                        >
+                            <option value="Default" >Default</option>
+                            <option value="Low" >Low</option>
+                            <option value="Medium">Medium </option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <label htmlFor="">Status:</label><br />
+                <select className="inputfield"
+                    onChange={(e) => setTaskForm((prev) => {
+                        return { ...prev, isCompleted: e.target.value };
+                    })}
+                    value={taskForm?.isCompleted}
+
+                >
+                    <option value="default">Default</option>
+                    <option value="Completed">Completed</option>
+                    <option values="In Progress">In Progress </option>
+                </select>
+
+                <br />
 
                 <div className="displayteam">
                     {
-                        taskForm?.project_team.length > 0 ?
-                            taskForm.project_team.map((member, i) => {
-                                return <span key={i}> {member}</span>
+                        taskForm?.comments && taskForm?.comments.length > 0 ?
+                            taskForm.comments.map((comment, i) => {
+                                return <span key={i}> {comment?.comment}</span>
                             })
                             : null
                     }
                 </div>
 
 
+                <div className="addteam">
+                    <input className='addt' type="text" placeholder=' Comments'
+                        value={comments?.comment}
+                        onChange={(e) => setComments({
+                            by: setOEmail,
+                            comment: e.target.value
+                        })}
+
+                    />
+                    <button className='addb' onClick={() => {
+                        setTaskForm((prev) => {
+                            const newComment = [...prev.comments, comments]
+                            return { ...prev, comments: newComment }
+                        })
+                        setComments({ by: "", comment: "" })
+                    }}>Add Comments </button>
+                </div>
+
+
+
+
+
                 <div className="btn">
-                    <button className="addbtn" onClick={() => addProject()}>Add</button>
+                    <button className="addbtn" onClick={() => addTask()}>Add</button>
                     <button className="cancelbtn" onClick={() => {
                         setTaskForm(
                             {
-                                name: "",
-                                start_date: "",
-                                end_date: "",
-                                owner: "",
+                                _id: "",
+                                pid: projectId || "",
+                                title: "",
                                 description: "",
-                                project_access: "private",
-                                project_team: [],
+                                assignTo: "",
+                                assignBy: "",
+                                dueDate: "",
+                                priority: "default",
+                                isCompleted: "",
+                                comments: [],
+                                created_at: "",
+                                updated_at: "",
                             }
                         )
-                        setteamMember("")
+                        setComments({ by: "", comment: "" })
                         showFormFunc(false)
                     }}>Cancel</button>
 
