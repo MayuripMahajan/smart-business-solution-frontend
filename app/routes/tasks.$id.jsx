@@ -46,6 +46,24 @@ const Projects = () => {
         })
     }
 
+    const deleteTask = async (id, pid) => {
+        if (confirm("Are You Sure?")) {
+            const response = await postAPI(`${domain}/api/task/deletetask`, JSON.stringify({ _id: id, pid: pid }))
+            if (response?.message == "Task Deleted Successfully") {
+                setTasks((prev) => {
+                    const updatedTasks = prev.filter((t) => t._id != id)
+                    return updatedTasks
+                })
+                alert('Successfully Deleted')
+            } else if (response?.message == "You don't have access to delete") {
+                alert("You don't have access to delete")
+            } else {
+                alert("Something went wrong ")
+            }
+        }
+
+    }
+
     return (
         <>
 
@@ -85,8 +103,8 @@ const Projects = () => {
                                                 <td>{task?.isCompleted}</td>
                                                 <td>{task?.created_at}</td>
                                                 <td>{task?.updated_at}</td>
-                                                <td><button onClick={() => { setShowEditForm(true); setCurrentProject(pro) }}>Edit</button></td>
-                                                <td><button onClick={() => deleteProject(pro?._id)}>Delete</button></td>
+                                                <td><button onClick={() => { setShowEditForm(true); setCurrentProject(task) }}>Edit</button></td>
+                                                <td><button onClick={() => deleteTask(task?._id, task?.pid)}>Delete</button></td>
 
                                             </tr>
                                         })
