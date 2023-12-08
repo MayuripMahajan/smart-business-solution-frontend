@@ -14,6 +14,7 @@ const EditProject = ({ showForm, showFormFunc, currentProject, setUpdatedProject
         description: "",
         project_access: "private",
         project_team: [],
+        status: ""
     })
 
     useEffect(() => {
@@ -84,6 +85,7 @@ const EditProject = ({ showForm, showFormFunc, currentProject, setUpdatedProject
                             value={projectForm?.project_access}
 
                         >
+                            <option value={projectForm?.project_access} >{projectForm?.project_access}</option>
                             <option value="public" >Private</option>
                             <option value="public">Public</option>
                         </select>
@@ -120,6 +122,21 @@ const EditProject = ({ showForm, showFormFunc, currentProject, setUpdatedProject
                     </div>
 
                 </div>
+
+                <label htmlFor="">Status:</label><br />
+                <select className="inputfield"
+                    onChange={(e) => setProjectForm((prev) => {
+                        return { ...prev, status: e.target.value };
+                    })}
+                    value={projectForm?.status}
+
+                >
+                    <option values={projectForm?.status}>{projectForm?.status} </option>
+                    <option values="In Progress">In Progress </option>
+                    <option value="Completed">Completed</option>
+                </select>
+
+                <br />
 
 
                 <p>Description:
@@ -177,6 +194,8 @@ const EditProject = ({ showForm, showFormFunc, currentProject, setUpdatedProject
                                 description: "",
                                 project_access: "private",
                                 project_team: [],
+                                status: ""
+
                             }
                         )
                         setteamMember("")

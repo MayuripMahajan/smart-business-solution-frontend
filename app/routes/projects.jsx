@@ -43,9 +43,7 @@ const Projects = () => {
             console.log(JSON.parse(res))
             setOEmail(JSON.parse(res).email)
             allprojects(JSON.parse(res).email)
-
         })
-
     }
 
     const allprojects = async (e = null) => {
@@ -92,16 +90,13 @@ const Projects = () => {
                 <div className="table-header">
                     <button onClick={() => setShowForm(!showForm)}>Add Project</button>
 
-
-                    <h3 className="title">Table Data </h3>
-
-
                     <div className="table-content">
                         <table>
                             <thead>
                                 <tr>
                                     <th>Sr. No.</th>
                                     <th>Projects</th>
+                                    <th>Status</th>
                                     <th>Owner</th>
                                     <th>Access</th>
                                     <th>Start date</th>
@@ -126,6 +121,7 @@ const Projects = () => {
 
 
                                                     {pro?.name}</td>
+                                                <td>{pro?.status}</td>
                                                 <td>{pro?.owner}</td>
                                                 <td>{pro?.project_access}</td>
                                                 <td>{pro?.created_at}</td>

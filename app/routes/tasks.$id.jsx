@@ -10,6 +10,7 @@ import { getCookie } from "../utils/cookies"
 import EditProject from "../components/editProject"
 import { useLoaderData, useParams } from "@remix-run/react"
 import AddTask from "../components/addtask"
+import EditTask from "../components/editTask"
 
 const Projects = () => {
     const loaderData = useLoaderData()
@@ -20,8 +21,8 @@ const Projects = () => {
     const [showForm, setShowForm] = useState(false)
     const [showEditForm, setShowEditForm] = useState(false)
     const [oEmail, setOEmail] = useState("")
-    const [currentProject, setCurrentProject] = useState({})
-    const [updatedProject, setUpdatedProject] = useState({})
+    const [currentTask, setcurrentTask] = useState({})
+    const [updatedTask, setUpdatedTask] = useState({})
 
     useEffect(() => {
         userData()
@@ -36,6 +37,17 @@ const Projects = () => {
         }
 
     }, [loaderData])
+
+    useEffect(() => {
+        setTasks((prev) => {
+            return prev.map((p) => {
+                if (p?._id == updatedTask?._id) {
+                    p = updatedTask
+                }
+                return p
+            })
+        })
+    }, [updatedTask])
 
     const userData = async () => {
         await getCookie("UD").then((res) => {
@@ -68,7 +80,7 @@ const Projects = () => {
         <>
 
             <AddTask setOEmail={oEmail} projectId={id} showForm={showForm} showFormFunc={setShowForm} setTasks={setTasks} />
-            <EditProject showForm={showEditForm} showFormFunc={setShowEditForm} currentProject={currentProject} setUpdatedProject={setUpdatedProject} />
+            <EditTask showForm={showEditForm} projectId={id} showFormFunc={setShowEditForm} currentTask={currentTask} setUpdatedTask={setUpdatedTask} />
 
             <Sidebar />
             <div className="main-content">
@@ -97,13 +109,13 @@ const Projects = () => {
                                         tasks.map((task, i) => {
                                             return <tr key={task?._id}>
                                                 <td>{i + 1}</td>
-                                                <td>{task?.title}</td>
+                                                <td onClick={() => { setShowEditForm(true); setcurrentTask(task) }}>{task?.title}</td>
                                                 <td>{task?.assignTo}</td>
                                                 <td>{task?.dueDate}</td>
                                                 <td>{task?.isCompleted}</td>
                                                 <td>{task?.created_at}</td>
                                                 <td>{task?.updated_at}</td>
-                                                <td><button onClick={() => { setShowEditForm(true); setCurrentProject(task) }}>Edit</button></td>
+                                                <td><button onClick={() => { setShowEditForm(true); setcurrentTask(task) }}>Edit</button></td>
                                                 <td><button onClick={() => deleteTask(task?._id, task?.pid)}>Delete</button></td>
 
                                             </tr>

@@ -14,6 +14,7 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
         description: "",
         project_access: "private",
         project_team: [],
+        status: ""
     })
 
     const [teamMember, setteamMember] = useState("")
@@ -46,6 +47,7 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
                         description: "",
                         project_access: "private",
                         project_team: [],
+                        status: ""
                     })
                     showFormFunc(false)
                 }
@@ -129,6 +131,21 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
 
                 </div>
 
+                <label htmlFor="">Status:</label><br />
+                <select className="inputfield"
+                    onChange={(e) => setProjectForm((prev) => {
+                        return { ...prev, status: e.target.value };
+                    })}
+                    value={projectForm?.status}
+
+                >
+                    <option values="In Progress">Default </option>
+                    <option values="In Progress">In Progress </option>
+                    <option value="Completed">Completed</option>
+                </select>
+
+                <br />
+
 
                 <p>Description:
                 </p>
@@ -181,6 +198,7 @@ const AddProject = ({ showForm, showFormFunc, setProjects }) => {
                                 description: "",
                                 project_access: "private",
                                 project_team: [],
+                                status: ""
                             }
                         )
                         setteamMember("")
