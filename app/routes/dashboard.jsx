@@ -5,9 +5,12 @@ import { postAPI } from "~/utils/api"
 import { domain } from "~/utils/domain"
 import { getCookie } from "~/utils/cookies"
 import { useEffect, useState } from "react"
+import Loader from "../components/loader"
+import loaderCss from "../styles/loader.css"
 const Dashboard = () => {
 
     const [OEmail, setOEmail] = useState();
+    const [isLoader, setIsLoader] = useState(true)
     const [analyticsInfo, setAnalyticsInfo] = useState({
         totalProject: 0,
         onGoingProject: 0,
@@ -36,9 +39,11 @@ const Dashboard = () => {
                     completedProject: completedCount
                 }
             })
-
+            setIsLoader(false)
         } catch (err) {
             console.log("Something went wrong")
+            setIsLoader(false)
+
         }
     }
 
@@ -52,6 +57,7 @@ const Dashboard = () => {
 
     return (
         <>
+            <Loader isShow={isLoader} />
             <Sidebar />
             <div className="main-content">
                 <Header />
@@ -77,12 +83,7 @@ const Dashboard = () => {
                         <p className="card-title">Complete Projects</p>
                     </div>
                 </div>
-
-
             </div >
-
-
-
         </>
     )
 }
@@ -92,5 +93,9 @@ export const links = () => [
     {
         rel: "stylesheet",
         href: styles
+    },
+    {
+        rel: "stylesheet",
+        href: loaderCss
     }
 ]

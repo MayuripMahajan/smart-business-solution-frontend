@@ -1,15 +1,33 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import styles from "../styles/style.css"
-import { Link } from "@remix-run/react"
+import { Link, useNavigate } from "@remix-run/react"
 import { postAPI } from "~/utils/api"
 import { domain } from "~/utils/domain"
-import { setCookie } from "../utils/cookies"
+import { getCookie, setCookie } from "../utils/cookies"
 const Login = () => {
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        userData()
+    }, [])
 
     const [loginForm, setLoginForm] = useState({
         email: "",
         password: ""
     })
+
+    const userData = async () => {
+        await getCookie("UD").then((res) => {
+            if (JSON.parse(res).email) {
+
+                console.log(JSON.parse(res))
+                navigate(`../dashboard`)
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
 
     const login = async () => {
         try {
@@ -23,7 +41,6 @@ const Login = () => {
                         password: "",
                     }
                 )
-                
             }
             else {
                 if (response?.message == "password not match") {
@@ -31,7 +48,6 @@ const Login = () => {
                 }
                 else {
                     alert("Something Went Wrong");
-
                 }
             }
         } catch (err) {
@@ -39,17 +55,13 @@ const Login = () => {
         }
     }
     return (
-
-
         <div className="main-body">
             <div className="side1">
                 <div className="head">
                     <p className="heading1">Impressive</p>
                     <h1 className="heading">React Login Page</h1>
                     <p className="heading1">Template</p>
-
                 </div>
-
             </div>
             <div className="side2">
                 <div className="login">

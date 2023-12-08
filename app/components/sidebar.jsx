@@ -1,6 +1,19 @@
-import { Link } from "@remix-run/react"
+import { Link, useNavigate } from "@remix-run/react"
+import { deleteCookie } from "~/utils/cookies"
 
 const Sidebar = () => {
+
+    const navigate = useNavigate()
+
+
+    // const logout = () => {
+    //     try {
+    //         deleteCookie("UD")
+    //         navigate(`../login`)
+    //     } catch (err) {
+    //         alert("Something went wrong")
+    //     }
+    // }
     return (
         <div className="sidebar">
             <div className="logo"></div>
@@ -41,7 +54,8 @@ const Sidebar = () => {
                 </li>
 
 
-                <li className="logout">
+                {/* <li className="logout" onClick={() => logout()}> */}
+                <li className="logout" >
                     <Link to="#">
                         <i className="fas fa-sign-out"></i>
                         <span>Logout</span>

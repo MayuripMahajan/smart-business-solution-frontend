@@ -7,10 +7,11 @@ import { postAPI } from "~/utils/api"
 import { domain } from "~/utils/domain"
 import addProjectStyles from "../styles/addProject.css"
 import { getCookie } from "../utils/cookies"
-import EditProject from "../components/editProject"
 import { useLoaderData, useParams } from "@remix-run/react"
 import AddTask from "../components/addtask"
 import EditTask from "../components/editTask"
+import Loader from "../components/loader"
+import loaderCss from "../styles/loader.css"
 
 const Projects = () => {
     const loaderData = useLoaderData()
@@ -23,6 +24,7 @@ const Projects = () => {
     const [oEmail, setOEmail] = useState("")
     const [currentTask, setcurrentTask] = useState({})
     const [updatedTask, setUpdatedTask] = useState({})
+    const [isLoader, setIsLoader] = useState(true)
 
     useEffect(() => {
         userData()
@@ -35,7 +37,7 @@ const Projects = () => {
         if (loaderData && loaderData?.tasks && loaderData?.tasks.length > 0) {
             setTasks(loaderData.tasks)
         }
-
+        setIsLoader(false)
     }, [loaderData])
 
     useEffect(() => {
@@ -60,24 +62,29 @@ const Projects = () => {
 
     const deleteTask = async (id, pid) => {
         if (confirm("Are You Sure?")) {
+            setIsLoader(true)
             const response = await postAPI(`${domain}/api/task/deletetask`, JSON.stringify({ _id: id, pid: pid }))
             if (response?.message == "Task Deleted Successfully") {
                 setTasks((prev) => {
                     const updatedTasks = prev.filter((t) => t._id != id)
                     return updatedTasks
                 })
+
                 alert('Successfully Deleted')
             } else if (response?.message == "You don't have access to delete") {
                 alert("You don't have access to delete")
             } else {
                 alert("Something went wrong ")
             }
+            setIsLoader(false)
+
         }
 
     }
 
     return (
         <>
+            <Loader isShow={isLoader} />
 
             <AddTask setOEmail={oEmail} projectId={id} showForm={showForm} showFormFunc={setShowForm} setTasks={setTasks} />
             <EditTask showForm={showEditForm} projectId={id} showFormFunc={setShowEditForm} currentTask={currentTask} setUpdatedTask={setUpdatedTask} />
@@ -160,5 +167,9 @@ export const links = () => [
     {
         rel: "stylesheet",
         href: addProjectStyles
+    },
+    {
+        rel: "stylesheet",
+        href: loaderCss
     }
 ]

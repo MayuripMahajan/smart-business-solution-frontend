@@ -10,7 +10,8 @@ import addProjectStyles from "../styles/addProject.css"
 import { getCookie } from "../utils/cookies"
 import EditProject from "../components/editProject"
 import { useNavigate } from "@remix-run/react"
-
+import Loader from "../components/loader"
+import loaderCss from "../styles/loader.css"
 
 const Projects = () => {
 
@@ -22,6 +23,7 @@ const Projects = () => {
     const [oEmail, setOEmail] = useState("")
     const [currentProject, setCurrentProject] = useState({})
     const [updatedProject, setUpdatedProject] = useState({})
+    const [isLoader, setIsLoader] = useState(true)
 
     useEffect(() => {
         userData()
@@ -47,41 +49,51 @@ const Projects = () => {
     }
 
     const allprojects = async (e = null) => {
-
-        const response = await postAPI(`${domain}/api/project/viewprojects`, JSON.stringify({ email: oEmail || e }))
-        console.log(response)
-        setProjects(response?.projects)
+        try {
+            const response = await postAPI(`${domain}/api/project/viewprojects`, JSON.stringify({ email: oEmail || e }))
+            console.log(response)
+            setProjects(response?.projects)
+            setIsLoader(false)
+        } catch (err) {
+            console.log("Something went wrong")
+            setIsLoader(false)
+        }
     }
 
     const deleteProject = async (pid) => {
-        if (confirm("Are You Sure?")) {
-            const response = await postAPI(`${domain}/api/project/deleteprojects`, JSON.stringify({ _id: pid, email: oEmail }))
-            if (response?.message == "project deleted successfully") {
-                setProjects((prev) => {
-                    const updatedProjects = prev.filter((p) => p._id != pid)
-                    return updatedProjects
+        try {
+            if (confirm("Are You Sure?")) {
+                setIsLoader(true)
+                const response = await postAPI(`${domain}/api/project/deleteprojects`, JSON.stringify({ _id: pid, email: oEmail }))
+                if (response?.message == "project deleted successfully") {
+                    setProjects((prev) => {
+                        const updatedProjects = prev.filter((p) => p._id != pid)
+                        return updatedProjects
 
-                })
-                alert('Successfully Deleted')
-            } else if (response?.message == "You don't have access to delete") {
-                alert("You don't have access to delete")
+                    })
+                    setIsLoader(false)
+
+                    alert('Successfully Deleted')
+                } else if (response?.message == "You don't have access to delete") {
+
+                    alert("You don't have access to delete")
+                    setIsLoader(false)
+                }
+                setIsLoader(false)
             }
+            setIsLoader(false)
         }
-
+        catch (err) {
+            console.log("something went wrong")
+            setIsLoader(false)
+        }
     }
-
-    // const [childdata, setchilddata] = useState('');
-    // const handleform =(data)=> {
-    //     setDataFromChild(data);
-    // }
-
-
-
 
     return (
         <>
+            <Loader isShow={isLoader} />
 
-            <AddProject showForm={showForm} showFormFunc={setShowForm} setProjects={setProjects} />
+            <AddProject oEmail={oEmail} showForm={showForm} showFormFunc={setShowForm} setProjects={setProjects} />
             <EditProject showForm={showEditForm} showFormFunc={setShowEditForm} currentProject={currentProject} setUpdatedProject={setUpdatedProject} />
 
             <Sidebar />
@@ -115,9 +127,12 @@ const Projects = () => {
                                         projects.map((pro, i) => {
                                             return <tr key={pro?._id}>
                                                 <td>{i + 1}</td>
-                                                <td onClick={() => navigate(`../tasks/${pro?._id}`, {
-                                                    state: { pid: pro?._id },
-                                                })}>
+                                                <td onClick={() => {
+                                                    setIsLoader(true)
+                                                    navigate(`../tasks/${pro?._id}`, {
+                                                        state: { pid: pro?._id },
+                                                    })
+                                                }}>
 
 
                                                     {pro?.name}</td>
@@ -162,5 +177,10 @@ export const links = () => [
     {
         rel: "stylesheet",
         href: addProjectStyles
+    },
+
+    {
+        rel: "stylesheet",
+        href: loaderCss
     }
 ]
