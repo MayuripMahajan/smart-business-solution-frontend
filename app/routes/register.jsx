@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react"
 import styles from "../styles/register.css"
-import { Link } from "@remix-run/react"
+import { Link, useNavigate } from "@remix-run/react"
 import { postAPI } from "~/utils/api"
 import { domain } from "~/utils/domain"
+import { getCookie } from "~/utils/cookies"
+
 const Register = () => {
+
+    const navigate = useNavigate()
 
     const [userForm, setUserForm] = useState({
         name: "",
@@ -13,7 +17,21 @@ const Register = () => {
         phone: ""
     })
 
+    const isAlreadyLoggedIn = () => {
+        try {
+            getCookie("UD").then((res) => {
+                if (JSON.parse(res)?.email) {
+                    navigate("../dashboard")
+                }
+            })
+        } catch (err) {
+            console.log("Something went wrong")
+        }
+    }
+
     useEffect(() => {
+        isAlreadyLoggedIn()
+
         console.log(userForm)
     }, [])
 
@@ -24,6 +42,8 @@ const Register = () => {
                     const response = await postAPI(`${domain}/api/user/signup`, JSON.stringify(userForm))
                     if (response?.success) {
                         alert("Register Successfully")
+                        navigate(`../login`)
+
                         setUserForm(
                             {
                                 name: "",

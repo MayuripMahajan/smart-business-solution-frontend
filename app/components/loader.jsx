@@ -3,8 +3,8 @@ const Loader = ({ isShow }) => {
         <div>
             {
                 isShow &&
-                <div class="loader-box">
-                    <div class="loader"></div>
+                <div className="loader-box">
+                    <div className="loader"></div>
                 </div>
             }
         </div>

@@ -9,6 +9,7 @@ const Login = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
+        isAlreadyLoggedIn()
         userData()
     }, [])
 
@@ -16,6 +17,18 @@ const Login = () => {
         email: "",
         password: ""
     })
+
+    const isAlreadyLoggedIn = () => {
+        try {
+            getCookie("UD").then((res) => {
+                if (JSON.parse(res)?.email) {
+                    navigate("../dashboard")
+                }
+            })
+        } catch (err) {
+            console.log("Something went wrong")
+        }
+    }
 
     const userData = async () => {
         await getCookie("UD").then((res) => {
@@ -34,7 +47,9 @@ const Login = () => {
             const response = await postAPI(`${domain}/api/user/signin`, JSON.stringify(loginForm))
             if (response?.success) {
                 setCookie("UD", JSON.stringify(response?.userDetails))
-                alert("Logged Successfully")
+                // alert("Logged Successfully")
+                navigate(`../dashboard`)
+
                 setLoginForm(
                     {
                         email: "",
@@ -65,7 +80,7 @@ const Login = () => {
             </div>
             <div className="side2">
                 <div className="login">
-                    <h1>Login</h1>
+                    <h1 >Login</h1>
                     <input value={loginForm?.email} className="inp" type="email" placeholder="Email"
                         onChange={(e) => {
                             setLoginForm((prev) => {
