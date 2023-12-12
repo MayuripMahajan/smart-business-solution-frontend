@@ -1,0 +1,45 @@
+.gs-form {
+    max-width: 85%;
+    height: 75vh;
+    background-color: white;
+    margin: 30px auto;
+    border-radius: 16px;
+}
+
+.question {
+    padding: 60px 80px;
+    font-size: 3rem;
+    font-weight: 600;
+    color: rgba(113, 99, 186, 255);
+
+}
+
+.answer {
+    padding: 0 0px 15px;
+    margin: 0px 80px;
+    font-size: 1rem;
+    border-bottom: 1px solid black;
+}
+
+.answer input {
+    width: 100%;
+    font-size: 2rem;
+}
+
+.gs-btn {
+    display: flex;
+    justify-content: end;
+    position: absolute;
+    width: 76.5%;
+    bottom: 85px;
+}
+
+.gs-btn button {
+    padding: 13px 30px;
+    font-size: 1.5rem;
+    background: rgba(113, 99, 186, 255);
+    margin: 2%;
+    color: white;
+    border-radius: 12px;
+    font-weight: 600;
+}

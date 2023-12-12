@@ -1,10 +1,9 @@
-import { Link, useNavigate } from "@remix-run/react"
+import { NavLink, useNavigate } from "@remix-run/react"
 import { deleteCookie } from "~/utils/cookies"
 
 const Sidebar = () => {
 
     const navigate = useNavigate()
-
 
     const logout = () => {
         try {
@@ -18,48 +17,50 @@ const Sidebar = () => {
         <div className="sidebar">
             <div className="logo"></div>
             <ul className="menu">
-                <li className="active">
-                    <Link to="../dashboard" >
+                <li>
+                    <NavLink to="../dashboard" >
                         <i className="fas fa-tachometer-alt"></i>
                         <span>Dashboard</span>
-                    </Link>
+                    </NavLink>
                 </li>
 
                 <li>
-                    <Link to="../projects">
+                    <NavLink to="../projects">
                         <i className="fas fa-user"></i>
                         <span>Projects</span>
-                    </Link>
+                    </NavLink>
                 </li>
 
                 <li>
-                    <Link to="#">
+                    <NavLink to="../landingpage">
                         <i className="fas fa-chart-bar"></i>
-                        <span>Statistics</span>
-                    </Link>
+                        <span>Create Your Website</span>
+                    </NavLink>
                 </li>
 
                 <li>
-                    <Link to="#">
-                        <i className="fas fa-briefcase"></i>
-                        <span>Careers</span>
-                    </Link>
+                    <NavLink to="../website">
+                        <i className="fas fa-chart-bar"></i>
+                        <span>Website</span>
+                    </NavLink>
                 </li>
 
+
+
                 <li>
-                    <Link to="#">
+                    <NavLink to="../faq">
                         <i className="fas fa-question-circle"></i>
                         <span>FAQ</span>
-                    </Link>
+                    </NavLink>
                 </li>
 
 
                 <li className="logout" onClick={() => logout()}>
-                {/* <li className="logout" > */}
-                    <Link to="#">
+                    {/* <li className="logout" > */}
+                    <NavLink to="#">
                         <i className="fas fa-sign-out"></i>
                         <span>Logout</span>
-                    </Link>
+                    </NavLink>
                 </li>
             </ul>
         </div>

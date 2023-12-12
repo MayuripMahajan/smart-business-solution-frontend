@@ -45,14 +45,14 @@ body {
     padding: 0;
 }
 
-.menu li {
+.menu li a {
     padding: 1rem;
     margin: 8px 0;
     border-radius: 8px;
     transition: all 0.5s ease-in-out;
 }
 
-.menu li:hover,
+.menu li a:hover,
 .active {
     background: #e0e0e058;
 }
