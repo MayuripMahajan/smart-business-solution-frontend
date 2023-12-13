@@ -1,9 +1,10 @@
 .gs-form {
     max-width: 85%;
     height: 75vh;
-    background-color: white;
+    background-color: #fff;
     margin: 30px auto;
     border-radius: 16px;
+    overflow-y: scroll;
 }
 
 .question {
@@ -12,6 +13,10 @@
     font-weight: 600;
     color: rgba(113, 99, 186, 255);
 
+}
+
+.mcq {
+    padding: 15px 0px !important;
 }
 
 .answer {
@@ -27,11 +32,15 @@
 }
 
 .gs-btn {
-    display: flex;
+    /* display: flex;
     justify-content: end;
     position: absolute;
     width: 76.5%;
-    bottom: 85px;
+    bottom: 85px; */
+
+    display: flex;
+    justify-content: end;
+    width: 90.5%;
 }
 
 .gs-btn button {
@@ -42,4 +51,24 @@
     color: white;
     border-radius: 12px;
     font-weight: 600;
+}
+
+.services-box {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px 75px;
+}
+
+.services-box .box {
+    width: 250px;
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px 5px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.services-box img {
+    width: 90%;
+    aspect-ratio: 3/4;
 }

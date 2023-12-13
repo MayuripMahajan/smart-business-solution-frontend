@@ -6,8 +6,12 @@ import { useEffect, useState } from "react"
 import styles from "../styles/style1.css"
 import landingPageCss from "../styles/landingPage.css"
 import { getCookie } from "../utils/cookies"
-import { postAPI } from "~/utils/api"
-import { domain } from "~/utils/domain"
+import {
+    postAPI,
+    imageUploadAPI
+} from "~/utils/api"
+import { domain, imgServer } from "~/utils/domain"
+
 
 
 const LandingPage = () => {
@@ -71,8 +75,13 @@ const LandingPage = () => {
         // },
         {
             qid: "servicesList",
-            question: "Enter service details",
-            answer: []
+            question: "Enter service name",
+            answer: [
+                // {
+                //     title: "",
+                //     imgURL: ""
+                // }
+            ]
         },
         // {
         //     qid: "ctaTagLine",
@@ -107,6 +116,12 @@ const LandingPage = () => {
         }
     ])
 
+    const [servicesList, setServicesList] = useState({
+        title: "",
+        description: "",
+        img: ""
+    })
+
     useEffect(() => {
         userData()
     }, [])
@@ -134,7 +149,11 @@ const LandingPage = () => {
         setQuestions((prev) => {
             return prev.map((q) => {
                 if (q.qid == "servicesList") {
-                    
+                    let newAns = [...q.answer, JSON.parse(ans)]
+                    return {
+                        ...q,
+                        answer: newAns
+                    }
                 } else
                     if (q.question === questions[qno].question) {
                         return {
@@ -173,6 +192,37 @@ const LandingPage = () => {
         console.log(qa)
     }, [qa])
 
+
+    const uploadImg = async (e) => {
+        setIsLoader(true)
+        const formData = new FormData();
+
+        const ee = e.target.files;
+        console.log("eeee", ee);
+
+        for (let i = 0; i < ee.length; i++) {
+            formData.append("images", e.target.files[i]);
+        }
+
+        const response = await imageUploadAPI(
+            `${imgServer}/api/product/uploadimg`,
+            formData
+        );
+        console.log(response);
+        if (response.success) {
+            console.log("success", response);
+
+            setServicesList((prev) => {
+                return {
+                    ...prev,
+                    img: response?.filename[0]
+                }
+            })
+
+          setIsLoader(false)
+        }
+        console.log("Response", response);
+    };
     // const updateObject = (id, updatedValue) => {
     //     setYourArray(prevArray =>
     //       prevArray.map(obj => (obj.id === id ? { ...obj, value: updatedValue } : obj))
@@ -196,14 +246,73 @@ const LandingPage = () => {
                     {
                         questions[qno]?.qid == "servicesList" ?
                             <>
-                                <div className="answer">
-                                    <input type="text" placeholder={questions[qno]?.question}
+                                <div className="answer mcq">
+                                    <input type="text" placeholder={"Enter Service"}
                                         onChange={(e) => {
-                                            updateAns(e.target.value)
+                                            setServicesList((prev) => {
+                                                return {
+                                                    ...prev,
+                                                    title: e.target.value
+                                                }
+                                            })
                                         }}
-                                        value={questions[qno]?.answer}
+                                        value={servicesList?.title}
                                     />
                                 </div>
+                                <div className="answer mcq">
+                                    <input type="text" placeholder={"Enter Description"}
+                                        onChange={(e) => {
+                                            setServicesList((prev) => {
+                                                return {
+                                                    ...prev,
+                                                    description: e.target.value
+                                                }
+                                            })
+                                        }}
+                                        value={servicesList?.description}
+                                    />
+                                </div>
+                                <div className="answer mcq">
+                                    <input type="file" name="images" placeholder={questions[qno]?.question}
+                                        onChange={(e) => {
+                                            uploadImg(e)
+                                        }}
+                                    // value={questions[qno]?.answer}
+                                    />
+                                </div>
+                                <button onClick={() => {
+                                    updateAns(JSON.stringify(servicesList))
+                                    setServicesList({
+                                        title: "",
+                                        description: "",
+                                        img: ""
+                                    })
+
+                                    alert("ho gaya")
+                                }}
+                                    style={{
+                                        background: "red", padding: '20px 30px', zIndex: '3',
+                                        marginLeft: '80px',
+                                        marginTop: '10px'
+                                    }}
+                                >Add</button>
+
+
+
+                                <div className="services-box">
+                                    {
+                                        questions[qno]?.answer?.map((q) => {
+                                            return <div className="box">
+                                                <img src={`${imgServer}/imgs/${q?.img}`} alt="" />
+                                                <p>{q.title}</p>
+                                                <p>{q.description}</p>
+                                            </div>
+                                        })
+                                    }
+
+                                </div>
+
+
 
                             </>
                             :
@@ -242,7 +351,7 @@ const LandingPage = () => {
 
 
 
-            </div>
+            </div >
 
         </>
     )
