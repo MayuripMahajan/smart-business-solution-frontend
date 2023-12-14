@@ -83,7 +83,7 @@ const EditTask = ({ showForm, showFormFunc, currentTask, setUpdatedTask, project
                     <p>Description:
                     </p>
 
-                    <Editor style={{ height: '320px', border: '1px solid orange' }}
+                    <Editor style={{ height: '320px', border: '1px solid black' }}
                         onTextChange={(e) => setTaskForm((prev) => {
                             return { ...prev, description: e.htmlValue };
                         })}

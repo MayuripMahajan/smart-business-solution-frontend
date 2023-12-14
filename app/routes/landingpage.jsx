@@ -28,6 +28,11 @@ const LandingPage = () => {
       answer: "",
     },
     {
+      qid: "logo",
+      question: "Upload Logo",
+      answer: "",
+    },
+    {
       qid: "shortDescription",
       question: "Enter short description about your company",
       answer: "",
@@ -118,6 +123,8 @@ const LandingPage = () => {
 
   const [teamMember, setTeamMember] = useState("");
 
+  const [logo, setLogo] = useState("");
+
   useEffect(() => {
     userData();
   }, []);
@@ -160,6 +167,11 @@ const LandingPage = () => {
           return {
             ...q,
             answer: newAns,
+          };
+        } else if (q.qid == "logo" && questions[qno].qid == "logo") {
+          return {
+            ...q,
+            answer: logo,
           };
         } else if (q.question == questions[qno].question) {
           console.log("normal  k andar");
@@ -256,11 +268,50 @@ const LandingPage = () => {
     }
     console.log("Response", response);
   };
-  // const updateObject = (id, updatedValue) => {
-  //     setYourArray(prevArray =>
-  //       prevArray.map(obj => (obj.id === id ? { ...obj, value: updatedValue } : obj))
-  //     );
-  //   };
+
+  const uploadLogo = async (e) => {
+    setIsLoader(true);
+    const formData = new FormData();
+
+    const ee = e.target.files;
+    console.log("eeee", ee);
+
+    for (let i = 0; i < ee.length; i++) {
+      formData.append("images", e.target.files[i]);
+    }
+
+    const response = await imageUploadAPI(
+      `${imgServer}/api/product/uploadimg`,
+      formData
+    );
+    console.log(response);
+    if (response.success) {
+      console.log("success", response);
+
+      // questions[qid].answer = response?.filename[0]
+
+      // setLogo(response?.filename[0]);
+      setQuestions((prev) => {
+        return prev.map((p) => {
+          if (p.qid == "logo") {
+            console.log("logo");
+            p.answer = response?.filename[0];
+          }
+          return p;
+        });
+      });
+
+      // setServicesList((prev) => {
+      //   return {
+      //     ...prev,
+      //     img: response?.filename[0],
+      //   };
+      // });
+
+      setIsLoader(false);
+    }
+    console.log("Response", response);
+  };
 
   return (
     <>
@@ -341,7 +392,6 @@ const LandingPage = () => {
               >
                 Add
               </button>
-
               <div className="services-box">
                 {questions[qno]?.answer?.map((q) => {
                   return (
@@ -396,16 +446,35 @@ const LandingPage = () => {
                   </div>
                 </>
               ) : (
-                <div className="answer">
-                  <input
-                    type="text"
-                    placeholder={questions[qno]?.question}
-                    onChange={(e) => {
-                      updateAns(e.target.value);
-                    }}
-                    value={questions[qno]?.answer}
-                  />
-                </div>
+                <>
+                  {questions[qno]?.qid == "logo" ? (
+                    <>
+                      {" "}
+                      <div className="answer">
+                        <input
+                          type="file"
+                          placeholder={questions[qno]?.question}
+                          onChange={(e) => {
+                            uploadLogo(e);
+                          }}
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="answer">
+                        <input
+                          type="text"
+                          placeholder={questions[qno]?.question}
+                          onChange={(e) => {
+                            updateAns(e.target.value);
+                          }}
+                          value={questions[qno]?.answer}
+                        />
+                      </div>
+                    </>
+                  )}
+                </>
               )}
             </>
           )}

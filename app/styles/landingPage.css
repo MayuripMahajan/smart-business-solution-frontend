@@ -6,6 +6,9 @@
   border-radius: 16px;
   overflow-y: scroll;
 }
+.gs-form::-webkit-scrollbar {
+  width: 1px;
+}
 
 .question {
   padding: 60px 80px;
