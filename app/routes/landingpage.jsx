@@ -62,6 +62,12 @@ const LandingPage = () => {
       question: "Enter about comapny details",
       answer: "",
     },
+
+    {
+      qid: "aboutIMG",
+      question: "Enter about img",
+      answer: "",
+    },
     // {
     //     qid: "services",
     //     question: "Enter services",
@@ -124,6 +130,7 @@ const LandingPage = () => {
   const [teamMember, setTeamMember] = useState("");
 
   const [logo, setLogo] = useState("");
+  const [aboutImg, setAboutImg] = useState("");
 
   useEffect(() => {
     userData();
@@ -172,6 +179,11 @@ const LandingPage = () => {
           return {
             ...q,
             answer: logo,
+          };
+        } else if (q.qid == "aboutIMG" && questions[qno].qid == "aboutIMG") {
+          return {
+            ...q,
+            answer: aboutImg,
           };
         } else if (q.question == questions[qno].question) {
           console.log("normal  k andar");
@@ -295,6 +307,48 @@ const LandingPage = () => {
         return prev.map((p) => {
           if (p.qid == "logo") {
             console.log("logo");
+            p.answer = response?.filename[0];
+          }
+          return p;
+        });
+      });
+
+      // setServicesList((prev) => {
+      //   return {
+      //     ...prev,
+      //     img: response?.filename[0],
+      //   };
+      // });
+
+      setIsLoader(false);
+    }
+    console.log("Response", response);
+  };
+  const uploadAboutIMG = async (e) => {
+    setIsLoader(true);
+    const formData = new FormData();
+
+    const ee = e.target.files;
+    console.log("eeee", ee);
+
+    for (let i = 0; i < ee.length; i++) {
+      formData.append("images", e.target.files[i]);
+    }
+
+    const response = await imageUploadAPI(
+      `${imgServer}/api/product/uploadimg`,
+      formData
+    );
+    console.log(response);
+    if (response.success) {
+      console.log("success", response);
+
+      // questions[qid].answer = response?.filename[0]
+
+      setAboutImg(response?.filename[0]);
+      setQuestions((prev) => {
+        return prev.map((p) => {
+          if (p.qid == "aboutIMG") {
             p.answer = response?.filename[0];
           }
           return p;
@@ -462,16 +516,28 @@ const LandingPage = () => {
                     </>
                   ) : (
                     <>
-                      <div className="answer">
-                        <input
-                          type="text"
-                          placeholder={questions[qno]?.question}
-                          onChange={(e) => {
-                            updateAns(e.target.value);
-                          }}
-                          value={questions[qno]?.answer}
-                        />
-                      </div>
+                      {questions[qno]?.qid == "aboutIMG" ? (
+                        <div className="answer">
+                          <input
+                            type="file"
+                            placeholder={questions[qno]?.question}
+                            onChange={(e) => {
+                              uploadAboutIMG(e);
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        <div className="answer">
+                          <input
+                            type="text"
+                            placeholder={questions[qno]?.question}
+                            onChange={(e) => {
+                              updateAns(e.target.value);
+                            }}
+                            value={questions[qno]?.answer}
+                          />
+                        </div>
+                      )}
                     </>
                   )}
                 </>
